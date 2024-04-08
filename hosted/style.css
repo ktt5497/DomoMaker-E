@@ -50,7 +50,7 @@ nav:nth-child(1) {
 .domoForm {
     border: 2px solid #338acc;
     height: 35px;
-    width: 700px;
+    width: 800px;
     margin-top:0px;
     padding-top:10px;
     background-color: #55acee;
@@ -59,17 +59,15 @@ nav:nth-child(1) {
 }
 
 .domoForm label {
-    display: inline-block;
     width: 75px;
     margin-left: 10px;
     font-size: 1.2em;
-    float: left;
     color: white;
 }
 
-.domoForm input[type=text] {
+/* .domoForm input[type=text] {
     float:left;
-}
+} */
 
 .makeDomoSubmit {
     transition: background-color 0.4s ease;
@@ -126,23 +124,39 @@ nav:nth-child(1) {
     text-decoration: none;
 }
 
-.formSubmit:link, .formSubmit:visited, .formSubmit:hover, .formSubmit:active {
+.formVerify {
+    transition: background-color 0.4s ease;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 100%;
+    background-color: #55acee;
+    border-radius: 2px;
+    border-color: #66acee;
+    padding: 3px 0px;
+    color: white;
+    text-decoration: none;
+}
+
+.formSubmit:link, .formSubmit:visited, .formSubmit:hover, .formSubmit:active, .formVerify:link, .formVerify:visited, .formVerify:hover, .formVerify:active {
     color: white;
 }
 
-.formSubmit:hover {
+.formSubmit:hover, .formVerify:hover {
     transition: background-color 0.4s ease;
     background-color: #338acc;
 }
 
-#user, #pass, #pass2 {
+#user, #pass, #pass2, #newPass, #newPass2 {
     text-align: center;
     font-size: 1.1em;
     width: 180px;
     border-radius: 6px;
 }
 
-#user:focus, #pass:focus, #pass2:focus {
+#user:focus, #pass:focus, #pass2:focus, #newPass:focus, #newPass2:focus {
     outline: none;
     box-shadow: 0px 0px 1px 1px #55acee;
 }
@@ -193,7 +207,7 @@ nav:nth-child(1) {
 }
 
 #domos {
-    width: 40%;
+    width: 60%;
     min-width: 400px;
     border: 2px solid #55acee;
     border-radius: 4px;
@@ -248,11 +262,20 @@ h3.domoName {
 }
 
 h3.domoAge {
-    float:right;
+    float: right;
     text-align: left;
     width: 100px;
     font-weight: bold;
     padding-right: 40px;
+    font-size: 1.5em;
+}
+
+h3.domoHeight {
+    float: right;
+    text-align: left;
+    width: 200px;
+    font-weight: bold;
+    /* padding-right: 40px; */
     font-size: 1.5em;
 }
 

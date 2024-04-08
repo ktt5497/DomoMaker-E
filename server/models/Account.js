@@ -33,6 +33,10 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  dOb: {
+    type: String,
+    required: true,
+  },
   createdDate: {
     type: Date,
     default: Date.now,
@@ -63,6 +67,25 @@ AccountSchema.statics.authenticate = async (username, password, callback) => {
     }
 
     const match = await bcrypt.compare(password, doc.password);
+    if (match) {
+      return callback(null, doc);
+    }
+    return callback();
+  } catch (err) {
+    return callback(err);
+  }
+};
+
+// Comparing the stored dOb to the player input dOb when the player is asked to verify.
+AccountSchema.statics.verification = async (username, dOb, callback) => {
+  try {
+    const doc = await AccountModel.findOne({ username }).exec();
+    if (!doc) {
+      return callback();
+    }
+
+    const match = await dOb === doc.dOb;
+
     if (match) {
       return callback(null, doc);
     }

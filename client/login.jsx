@@ -2,9 +2,28 @@ const helper = require('./helper.js');
 const React = require('react');
 const {createRoot} = require('react-dom/client');
 
+const handleVerify = (e) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const username = e.target.querySelector('#user').value;
+    const dOb = e.target.querySelector('#dOb2').value;
+
+    //session storage in use for username to use in pass.jsx
+    sessionStorage.setItem('username', username);
+
+    if(!username || !dOb) {
+        helper.handleError('Username and Date of Birth are required!');
+        return false;
+    }
+
+    helper.sendPost(e.target.action, {username, dOb});
+    return false;
+};
+
 const handleLogin = (e) => {
     e.preventDefault();
-    helper.hideError;
+    helper.hideError();
 
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
@@ -26,7 +45,9 @@ const handleSignup = (e) => {
     const pass = e.target.querySelector('#pass').value;
     const pass2 = e.target.querySelector('#pass2').value;
 
-    if(!username || !pass || !pass2) {
+    const dOb = e.target.querySelector('#dOb').value;
+
+    if(!username || !pass || !pass2 || !dOb) {
         helper.handleError('All fields are required!');
         return false;
     }
@@ -36,10 +57,28 @@ const handleSignup = (e) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, {username, pass, pass2});
+    helper.sendPost(e.target.action, {username, pass, pass2, dOb});
 
     return false;
 }
+
+//Verification Window
+const VerificationWindow = (props) => {
+    return (
+        <form id="verifyForm"
+            name="verifyForm"
+            onSubmit={handleVerify}
+            action="/verification"
+            method='POST'
+            className="mainForm">
+                <label htmlFor="username">Username: </label>
+                <input type="text" id="user" name="username" placeholder="username" />
+                <label htmlFor="dateOfbirth">Date of Birth: </label>
+                <input type="date" id="dOb2" name="dOb" />
+                <input className="formVerify" type="submit" value="Verify to Set New Password" />
+            </form>
+    );
+};
 
 const LoginWindow = (props) => {
     return (
@@ -74,6 +113,8 @@ const SignupWindow = (props) => {
                 <input type="password" id="pass" name="pass" placeholder="password" />
                 <label htmlFor="pass2">Password: </label>
                 <input type="password" id="pass2" name="pass2" placeholder="retype password" />
+                <label htmlFor='dateOfbirth'>Date of Birth: </label>
+                <input type="date" id="dOb" name="dOb" />
                 <input className="formSubmit" type="submit" value="Sign up" />
             </form>
     );
@@ -82,6 +123,7 @@ const SignupWindow = (props) => {
 const init = () => {
     const loginButton = document.getElementById('loginButton');
     const signupButton = document.getElementById('signupButton');
+    const forgotpassButton = document.getElementById('forgotpassButton');
 
     const root = createRoot(document.getElementById('content'));
 
@@ -94,6 +136,12 @@ const init = () => {
     signupButton.addEventListener('click', (e) => {
         e.preventDefault();
         root.render( <SignupWindow /> );
+        return false;
+    });
+
+    forgotpassButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        root.render( <VerificationWindow /> );
         return false;
     });
 
